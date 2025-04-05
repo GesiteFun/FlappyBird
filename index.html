@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pixel Flappy (4:3)</title>
+    <title>Pixel Flappy</title>
     <style>
         @font-face {
             font-family: 'Pixelify Sans';
@@ -21,17 +21,21 @@
             align-items: center;
             height: 100vh;
             touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
         }
         
         #game-container {
             position: relative;
-            width: 720px;  /* Changed to 4:3 aspect ratio */
-            height: 550px; /* Changed to 4:3 aspect ratio */
+            width: 100%;
+            max-width: 720px;  /* Max width for larger screens */
+            height: 100vh;
+            max-height: 550px;
             border: 6px solid #222;
             border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 8px px rgba(0,0,0,0.1);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
             background-color: #fff;
+            margin: 0 auto;
         }
         
         #game-canvas {
@@ -615,13 +619,22 @@
             requestAnimationFrame(gameLoop);
         }
         
-        // Game controls
-        function handleJump(e) {
-            if (e) e.preventDefault();
+       // Game controls
+       function handleJump(e) {
+            if (e) {
+                e.preventDefault();
+                // Tambahkan feedback visual untuk tap
+                if (e.type === 'touchstart' || e.type === 'touchend') {
+                    canvas.style.transform = 'scale(0.98)';
+                    setTimeout(() => {
+                        canvas.style.transform = 'scale(1)';
+                    }, 100);
+                }
+            }
             bird.jump();
         }
-        
-        // Event listeners
+
+        // Event listeners yang diperbaiki
         function setupEventListeners() {
             document.addEventListener('keydown', (e) => {
                 if (e.code === 'Space') {
@@ -629,8 +642,17 @@
                 }
             });
             
+            // Event listeners untuk desktop dan mobile
             canvas.addEventListener('click', handleJump);
+            
+            // Event listeners khusus touch dengan passive:false
             canvas.addEventListener('touchstart', handleJump, {passive: false});
+            canvas.addEventListener('touchend', handleJump, {passive: false});
+            
+            // Tambahkan event listener untuk ready-screen
+            readyScreen.addEventListener('click', handleJump);
+            readyScreen.addEventListener('touchstart', handleJump, {passive: false});
+            readyScreen.addEventListener('touchend', handleJump, {passive: false});
             
             startButton.addEventListener('click', showReadyScreen);
             restartButton.addEventListener('click', showReadyScreen);
