@@ -1,1 +1,1 @@
-# FlappyBird
+# Speed Click Challenge
