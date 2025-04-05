@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pixel Flappy</title>
+    <title>Pixel Flappy (4:3)</title>
     <style>
-        @font-face {
+       @font-face {
             font-family: 'Pixelify Sans';
             src: url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap');
         }
@@ -171,7 +171,7 @@
         
         <div id="score-display">0</div>
         <div id="high-score-display">High: 0</div>
-        <div id="tap-instruction">TAP TO START</div>
+        <div id="tap-instruction">"Tap Tap"</div>
         <button id="sound-toggle">🔊</button>
         
         <div id="start-screen">
@@ -619,8 +619,8 @@
             requestAnimationFrame(gameLoop);
         }
         
-       // Game controls
-       function handleJump(e) {
+      // Game controls
+      function handleJump(e) {
             if (e) {
                 e.preventDefault();
                 // Tambahkan feedback visual untuk tap
